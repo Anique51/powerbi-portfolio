@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Muhammad Aneeq Ashraf — Power BI Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #18181f;
+    --border: #2a2a38;
+    --accent: #f5c842;
+    --accent2: #e8a020;
+    --text: #f0f0f5;
+    --muted: #7a7a9a;
+    --soft: #c8c8dd;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 0 3rem; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 80% 50%, rgba(245,200,66,0.07) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 10% 80%, rgba(232,160,32,0.05) 0%, transparent 60%); pointer-events: none; }
+  .hero-grid-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: linear-gradient(to bottom, transparent, var(--border) 30%, var(--border) 70%, transparent); opacity: 0.3; }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .hero-tag { display: inline-block; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(245,200,66,0.3); padding: 0.3rem 0.9rem; border-radius: 2px; margin-bottom: 2rem; animation: fadeUp 0.8s ease both; }
+  .hero-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.8rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; animation: fadeUp 0.8s 0.1s ease both; }
+  .hero-name span { color: var(--accent); display: block; }
+  .hero-sub { font-size: 1.1rem; color: var(--soft); max-width: 520px; margin-bottom: 3rem; animation: fadeUp 0.8s 0.2s ease both; font-weight: 300; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; animation: fadeUp 0.8s 0.3s ease both; }
+  .meta-chip { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--muted); background: var(--surface); border: 1px solid var(--border); padding: 0.4rem 0.9rem; border-radius: 2px; }
+  .meta-chip svg { width: 13px; height: 13px; flex-shrink: 0; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s 0.4s ease both; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-size: 0.85rem; letter-spacing: 0.05em; font-weight: 500; padding: 0.75rem 1.5rem; border-radius: 2px; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .btn-primary { background: var(--accent); color: #0a0a0f; }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--soft); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+  .hero-scroll { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; animation: fadeUp 1s 0.8s ease both; }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+
+  section { position: relative; z-index: 1; padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 60px; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 2.6rem); letter-spacing: -0.02em; margin-bottom: 1rem; line-height: 1.15; }
+  .section-desc { color: var(--soft); font-size: 1rem; max-width: 560px; margin-bottom: 4rem; font-weight: 300; }
+  .full-divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent); }
+
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 5rem; transition: border-color 0.3s; }
+  .project-card:hover { border-color: rgba(245,200,66,0.25); }
+  .project-header { padding: 2.5rem 3rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+  .project-number { font-family: 'Syne', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .project-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(1.4rem, 2.5vw, 1.9rem); letter-spacing: -0.02em; margin: 0.4rem 0 0.8rem; line-height: 1.2; }
+  .project-tagline { color: var(--soft); font-size: 0.95rem; max-width: 520px; font-weight: 300; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+  .tag { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.7rem; border: 1px solid var(--border); border-radius: 2px; color: var(--muted); background: var(--surface2); }
+  .tag.accent { border-color: rgba(245,200,66,0.35); color: var(--accent); }
+  .data-source { font-size: 0.8rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 2px; white-space: nowrap; align-self: flex-start; }
+  .data-source strong { color: var(--soft); display: block; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.2rem; }
+
+  .project-overview { padding: 2.5rem 3rem; border-bottom: 1px solid var(--border); }
+  .overview-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+  .real-video { width: 100%; border-radius: 3px; display: block; border: 1px solid var(--border); background: #000; max-height: 540px; }
+  .full-dashboard { padding: 2.5rem 3rem; border-bottom: 1px solid var(--border); }
+  .real-image { width: 100%; border-radius: 3px; display: block; border: 1px solid var(--border); }
+
+  .visuals-section { padding: 2.5rem 3rem; }
+  .visuals-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+  .visuals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .visual-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+  .visual-item:hover { border-color: rgba(245,200,66,0.25); transform: translateY(-2px); }
+  .visual-img { width: 100%; display: block; border-bottom: 1px solid var(--border); }
+  .visual-info { padding: 1.2rem 1.4rem; }
+  .visual-type { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.35rem; font-weight: 500; }
+  .visual-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.92rem; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+  .visual-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+  .visual-insight { margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: rgba(245,200,66,0.7); line-height: 1.5; }
+  .visual-insight::before { content: '↳ '; font-weight: 600; }
+
+  .project-story { padding: 2.5rem 3rem; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .story-block h4 { font-family: 'Syne', sans-serif; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; font-weight: 600; }
+  .story-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .story-list li { font-size: 0.88rem; color: var(--soft); padding-left: 1.2rem; position: relative; font-weight: 300; line-height: 1.55; }
+  .story-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
+
+  .pages-section { padding: 2.5rem 3rem; border-top: 1px solid var(--border); }
+  .pages-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+  .page-block { margin-bottom: 2.5rem; padding: 1.8rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 3px; border-left: 3px solid var(--accent); }
+  .page-block:last-child { margin-bottom: 0; }
+  .page-num { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+  .page-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1rem; margin-bottom: 1rem; }
+  .page-full-img { width: 100%; border-radius: 3px; display: block; border: 1px solid var(--border); margin-top: 1.5rem; }
+
+  .contact-section { padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; text-align: center; }
+  .contact-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 2.5rem; }
+  .contact-link { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--soft); border: 1px solid var(--border); background: var(--surface); padding: 0.75rem 1.4rem; border-radius: 2px; font-size: 0.85rem; transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .contact-link svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; color: var(--muted); }
+  footer span { font-family: 'Syne', sans-serif; color: var(--soft); font-size: 0.85rem; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes scrollPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, section, .contact-section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .project-header, .project-overview, .full-dashboard, .visuals-section, .pages-section, .project-story { padding: 1.8rem 1.5rem; }
+    .visuals-grid { grid-template-columns: 1fr; }
+    .project-story { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">MAA</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero" id="about">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-line"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Power BI Portfolio</div>
+    <h1 class="hero-name">
+      Muhammad<br>
+      <span>Aneeq Ashraf</span>
+    </h1>
+    <p class="hero-sub">
+      Data Science student specialising in analytics, business intelligence,
+      and turning raw data into decisions that actually matter.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        BS Data Science — Air University, Islamabad
+      </div>
+      <div class="meta-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        2022 – 2026 (Expected)
+      </div>
+      <div class="meta-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+        Islamabad, Pakistan
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        View Projects
+      </a>
+      <a href="https://www.linkedin.com/in/muhammad-aneeq-ashraf-74bb56247/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+      <a href="https://github.com/Anique51" target="_blank" class="btn btn-ghost">GitHub</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<section id="projects">
+  <div class="section-label">Work</div>
+  <h2 class="section-title">Power BI Dashboards</h2>
+  <p class="section-desc">
+    Two end-to-end projects built to answer real analytical questions — from raw
+    public data to interactive, decision-ready dashboards.
+  </p>
+
+  <!-- PROJECT 1 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-number">Project 01</div>
+        <h3 class="project-title">Pakistan Literacy &amp; Gender Gap Dashboard</h3>
+        <p class="project-tagline">
+          Analysing gender disparity in literacy rates and school attendance across all provinces of Pakistan, tracked from 2010–11 to 2019–20.
+        </p>
+        <div class="project-tags">
+          <span class="tag accent">Power BI</span>
+          <span class="tag">KPI Cards</span>
+          <span class="tag">Clustered Column Chart</span>
+          <span class="tag">Line Chart</span>
+          <span class="tag">Horizontal Bar Chart</span>
+          <span class="tag">Province Slicer</span>
+        </div>
+      </div>
+      <div class="data-source">
+        <strong>Data Source</strong>
+        Pakistan Bureau of Statistics<br>
+        <span style="font-size:0.75rem;color:var(--muted)">Public provincial dataset</span>
+      </div>
+    </div>
+
+    <div class="project-overview">
+      <div class="overview-label">Full Dashboard — Walkthrough Video</div>
+      <video class="real-video" controls preload="metadata">
+        <source src="Literacy_Rate_Dash_Video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="full-dashboard">
+      <div class="overview-label">Full Dashboard — Screenshot</div>
+      <img class="real-image" src="Literacy-Full_Dash.png" alt="Pakistan Literacy Rate Full Dashboard" />
+    </div>
+
+    <div class="visuals-section">
+      <div class="visuals-label">Individual Visuals — Breakdown</div>
+      <div class="visuals-grid">
+
+        <div class="visual-item">
+          <img class="visual-img" src="Literacy-Pop_with_Mobile_Phone_Chart.png" alt="Population with Mobile Access" />
+          <div class="visual-info">
+            <div class="visual-type">Clustered Column Chart</div>
+            <div class="visual-name">Mobile Access by Gender &amp; Location</div>
+            <div class="visual-desc">Compares smartphone access across Female Rural, Female Urban, Male Rural, and Male Urban segments across all provinces.</div>
+            <div class="visual-insight">Female rural populations lag consistently in every province — low mobile access directly mirrors low literacy and school attendance rates.</div>
+          </div>
+        </div>
+
+        <div class="visual-item">
+          <img class="visual-img" src="Literacy-Gender_Gap_Bar_Chart.png" alt="Gender Gap in Literacy by Province" />
+          <div class="visual-info">
+            <div class="visual-type">Horizontal Bar Chart</div>
+            <div class="visual-name">Gender Gap in Literacy by Province (2019–20)</div>
+            <div class="visual-desc">Side-by-side male and female literacy rates for each province, making the gap immediately visible at a glance.</div>
+            <div class="visual-insight">Balochistan shows the starkest gap — female literacy barely reaches 15% while male exceeds 60%, highlighting where intervention is most urgent.</div>
+          </div>
+        </div>
+
+        <div class="visual-item">
+          <img class="visual-img" src="Gender_Gap___by_Year_and_Prov.png" alt="Gender Gap % by Year Line Chart" />
+          <div class="visual-info">
+            <div class="visual-type">Line Chart</div>
+            <div class="visual-name">Gender Gap % by Year &amp; Province</div>
+            <div class="visual-desc">Tracks the gender gap trend over time from 2010–11 to 2019–20, with a separate line for each province.</div>
+            <div class="visual-insight">All provinces trend downward (improving), but Balochistan remains above 70% gap — progress exists but falls short without targeted policy action.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="project-story">
+      <div class="story-block">
+        <h4>Key Findings</h4>
+        <ul class="story-list">
+          <li>Female school attendance nationwide is 40.40% vs. male 69.40% — a 29-point gap</li>
+          <li>Balochistan has the widest literacy gap; Punjab performs best but still shows inequality</li>
+          <li>Rural females have the lowest mobile access in every single province</li>
+          <li>All provinces show improvement over time, but at an insufficient pace</li>
+          <li>Digital access and literacy rates are strongly correlated across the dataset</li>
+        </ul>
+      </div>
+      <div class="story-block">
+        <h4>Policy Implications</h4>
+        <ul class="story-list">
+          <li>Girls-focused enrollment programmes in Balochistan and KP as top priority</li>
+          <li>Rural female education infrastructure investment where gaps are widest</li>
+          <li>Mobile and digital learning expansion to underserved regions</li>
+          <li>Province-specific funding allocation and monitoring frameworks</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-number">Project 02</div>
+        <h3 class="project-title">Global Bike Sales Performance Dashboard</h3>
+        <p class="project-tagline">
+          A 3-page interactive sales intelligence report covering $77.5M in revenue across 6 countries, 18 sales reps, and multiple product categories — built on the AdventureWorks dataset.
+        </p>
+        <div class="project-tags">
+          <span class="tag accent">Power BI</span>
+          <span class="tag">Multi-Page Report</span>
+          <span class="tag">KPI Cards</span>
+          <span class="tag">Treemap</span>
+          <span class="tag">Bar &amp; Line Charts</span>
+          <span class="tag">Pie Chart</span>
+          <span class="tag">Matrix Table</span>
+          <span class="tag">Country Slicer</span>
+        </div>
+      </div>
+      <div class="data-source">
+        <strong>Data Source</strong>
+        AdventureWorks Dataset<br>
+        <span style="font-size:0.75rem;color:var(--muted)">Microsoft sample — bike company</span>
+      </div>
+    </div>
+
+    <div class="project-overview">
+      <div class="overview-label">Full Dashboard — Walkthrough Video</div>
+      <video class="real-video" controls preload="metadata">
+        <source src="Sales_Video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="pages-section">
+      <div class="pages-label">Page-by-Page Breakdown</div>
+
+      <div class="page-block">
+        <div class="page-num">Page 01</div>
+        <div class="page-name">Executive Overview</div>
+        <p style="font-size:0.88rem;color:var(--soft);font-weight:300;margin-bottom:1rem;">
+          Top-level KPIs give leadership an instant health check: $77.5M total sales against a $676.2M target, a 0.11 target achievement ratio, and 18 active salespeople — paired with regional and yearly trend charts.
+        </p>
+        <ul class="story-list">
+          <li><strong style="color:var(--soft)">Total Sales & Total Target KPIs</strong> — $77.5M actual vs $676.2M target, showing scale of the growth opportunity</li>
+          <li><strong style="color:var(--soft)">Target Achievement (0.11)</strong> — ratio of actual to target; indicates 11% attainment, useful for tracking rep incentive progress</li>
+          <li><strong style="color:var(--soft)">Sales by Region (Bar Chart)</strong> — United States dominates at ~$50M, with Canada a distant second</li>
+          <li><strong style="color:var(--soft)">Sum of Sales by Year (Line Chart)</strong> — revenue peaked in 2019 at ~$33M then declined in 2020</li>
+        </ul>
+        <img class="page-full-img" src="Sales_Page-1.png" alt="Sales Dashboard Page 1 - Executive Overview" />
+      </div>
+
+      <div class="page-block">
+        <div class="page-num">Page 02</div>
+        <div class="page-name">Country &amp; Salesperson Drilldown</div>
+        <p style="font-size:0.88rem;color:var(--soft);font-weight:300;margin-bottom:1rem;">
+          A country slicer drives all visuals simultaneously across Australia, Canada, France, Germany, UK, and US — enabling focused market analysis of categories and individual rep performance.
+        </p>
+        <ul class="story-list">
+          <li><strong style="color:var(--soft)">Sales by Category (Bar Chart)</strong> — Bikes dominate at ~$60M+; Components, Clothing, and Accessories trail significantly</li>
+          <li><strong style="color:var(--soft)">Sales by Salesperson (Pie Chart)</strong> — Linda Mitchell leads at 13.1% share ($10.16M), followed by Jillian Carson at 12.58%</li>
+          <li><strong style="color:var(--soft)">Country × Salesperson Matrix</strong> — cross-tab revealing which reps operate in which markets and their exact revenue contributions</li>
+        </ul>
+        <img class="page-full-img" src="Sales_Page-2.png" alt="Sales Dashboard Page 2 - Country and Salesperson Drilldown" />
+      </div>
+
+      <div class="page-block">
+        <div class="page-num">Page 03</div>
+        <div class="page-name">Target vs. Actuals &amp; Category Trends</div>
+        <p style="font-size:0.88rem;color:var(--soft);font-weight:300;margin-bottom:1rem;">
+          The analytical deep-dive — surfaces which countries are hitting targets, how categories distribute across geographies, and how each country's sales trend over time.
+        </p>
+        <ul class="story-list">
+          <li><strong style="color:var(--soft)">Sales & Target Achievement by Country (Combo Chart)</strong> — US leads in absolute sales; achievement rate drops sharply for smaller markets</li>
+          <li><strong style="color:var(--soft)">Sales by Country & Category (Treemap)</strong> — US Bikes take the dominant block; Canada and France follow proportionally</li>
+          <li><strong style="color:var(--soft)">Sales by Year & Country (Line Chart)</strong> — US growth trajectory stands out clearly; other markets remain relatively flat</li>
+        </ul>
+        <img class="page-full-img" src="Sales_Page-3.png" alt="Sales Dashboard Page 3 - Target vs Actuals" />
+      </div>
+    </div>
+
+    <div class="project-story">
+      <div class="story-block">
+        <h4>Key Findings</h4>
+        <ul class="story-list">
+          <li>US accounts for the majority of revenue (~$50M of $77.5M total)</li>
+          <li>Bikes are the dominant category — far ahead of all others combined</li>
+          <li>Top 2 reps (Linda Mitchell, Jillian Carson) account for ~25% of all sales</li>
+          <li>Revenue peaked in 2019 across most markets then declined in 2020</li>
+          <li>Target achievement of 0.11 signals significant headroom for growth strategy</li>
+        </ul>
+      </div>
+      <div class="story-block">
+        <h4>Skills Demonstrated</h4>
+        <ul class="story-list">
+          <li>Multi-page report design with consistent visual language across all pages</li>
+          <li>Cross-filtering country slicer driving multiple visual types simultaneously</li>
+          <li>Treemap for proportional, hierarchical category-country breakdowns</li>
+          <li>Matrix table for salesperson-country performance cross-analysis</li>
+          <li>Dual-axis combo chart combining sales bars with achievement rate line</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<div class="contact-section" id="contact">
+  <div class="section-label" style="justify-content:center;">Contact</div>
+  <h2 class="section-title">Get in Touch</h2>
+  <p style="color:var(--soft);font-size:1rem;max-width:440px;margin:0.8rem auto 0;font-weight:300;">
+    Open to opportunities in data analytics, business intelligence, and Power BI development.
+  </p>
+  <div class="contact-grid">
+    <a href="mailto:aneeqmalik055@gmail.com" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      aneeqmalik055@gmail.com
+    </a>
+    <a href="tel:+923213813002" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.6 6.6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      +92 321 3813002
+    </a>
+    <a href="https://www.linkedin.com/in/muhammad-aneeq-ashraf-74bb56247/" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/Anique51" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+      GitHub
+    </a>
+  </div>
+</div>
+
+<footer>
+  <span>Muhammad Aneeq Ashraf</span>
+  <div>BS Data Science · Air University, Islamabad · 2022–2026</div>
+</footer>
+
+</body>
+</html>
